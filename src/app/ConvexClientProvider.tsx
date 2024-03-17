@@ -9,5 +9,6 @@ export default function ConvexClientProvider({
 }: {
   children: ReactNode;
 }) {
+  // TODO: How to use clerk here?
   return <ConvexProvider client={convex}>{children}</ConvexProvider>;
 }
