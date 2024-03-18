@@ -7,23 +7,25 @@ import {
   SignedIn,
   SignedOut,
   useOrganization,
+  useUser,
 } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
 export default function Home() {
-  const { organization } = useOrganization();
-  // TODO: What if it's just a user not any organization, How to handle that?
+  const organization = useOrganization();
+  const user = useUser();
 
-  const files = useQuery(
-    api.files.getFiles,
-    organization?.id ? { orgId: organization?.id } : "skip"
-  );
+  let orgId: string | undefined;
+  if (organization.isLoaded && user.isLoaded) {
+    orgId = organization.organization?.id ?? user.user?.id;
+  }
+  const files = useQuery(api.files.getFiles, orgId ? { orgId } : "skip");
   const createFile = useMutation(api.files.createFile);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <SignedIn>
+      {/* <SignedIn>
         <SignOutButton>
           <Button>Sign out</Button>
         </SignOutButton>
@@ -33,7 +35,7 @@ export default function Home() {
         <SignInButton mode="modal">
           <Button>Sign in</Button>
         </SignInButton>
-      </SignedOut>
+      </SignedOut> */}
 
       {files?.map((file) => (
         <div key={file._id}>{file.name} </div>
