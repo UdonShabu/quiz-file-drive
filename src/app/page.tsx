@@ -13,11 +13,10 @@ import { api } from "../../convex/_generated/api";
 
 export default function Home() {
   const { organization } = useOrganization();
-  // TODO: We want to query faster and have their own files for each organization
-  // There're 4 locations to fix
+
   const files = useQuery(
-    api.files.getFiles
-    // FIXME:
+    api.files.getFiles,
+    organization?.id ? { orgId: organization?.id } : "skip"
   );
   const createFile = useMutation(api.files.createFile);
 
@@ -41,7 +40,7 @@ export default function Home() {
 
       <Button
         onClick={() => {
-          // FIXME:
+          if (!organization) return;
           createFile({ name: "Hello", orgId: organization.id });
         }}
       >

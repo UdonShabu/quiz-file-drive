@@ -18,7 +18,7 @@ export const getFiles = query({
 
     return await ctx.db
       .query("files")
-      .withIndex("by_orgId", //FIXME:)
+      .withIndex("by_orgId", (q) => q.eq("orgId", args.orgId))
       .collect();
   },
 });

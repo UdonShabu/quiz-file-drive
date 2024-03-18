@@ -5,5 +5,5 @@ export default defineSchema({
   files: defineTable({
     name: v.string(),
     orgId: v.string(),
-  }), // FIXME:,
+  }).index("by_orgId", ["orgId"]),
 });
