@@ -13,6 +13,7 @@ import { api } from "../../convex/_generated/api";
 
 export default function Home() {
   const { organization } = useOrganization();
+  // TODO: What if it's just a user not any organization, How to handle that?
 
   const files = useQuery(
     api.files.getFiles,
