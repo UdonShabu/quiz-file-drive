@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {/* <SignedIn>
+      <SignedIn>
         <SignOutButton>
           <Button>Sign out</Button>
         </SignOutButton>
@@ -35,7 +35,7 @@ export default function Home() {
         <SignInButton mode="modal">
           <Button>Sign in</Button>
         </SignInButton>
-      </SignedOut> */}
+      </SignedOut>
 
       {files?.map((file) => (
         <div key={file._id}>{file.name} </div>
@@ -43,8 +43,8 @@ export default function Home() {
 
       <Button
         onClick={() => {
-          if (!organization) return;
-          createFile({ name: "Hello", orgId: organization.id });
+          if (!orgId) return;
+          createFile({ name: "Hello", orgId });
         }}
       >
         Create
