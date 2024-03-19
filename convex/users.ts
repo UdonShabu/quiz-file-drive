@@ -6,7 +6,7 @@ export const createUser = internalMutation({
   async handler(ctx, args) {
     await ctx.db.insert("users", {
       tokenIdentifier: args.tokenIdentifier,
-      //FIXME:
+      orgIds: [],
     });
   },
 });
@@ -18,13 +18,14 @@ export const addOrgIdToUser = internalMutation({
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
         q.eq("tokenIdentifier", args.tokenIdentifier)
-      );
-    //FIXME:
+      )
+      .first();
+
     if (!user) throw new ConvexError("expected user to be defined");
 
     await ctx.db.insert("users", {
       tokenIdentifier: args.tokenIdentifier,
-      //FIXME:
+      orgIds: [...user.orgIds, args.orgId],
     });
   },
 });

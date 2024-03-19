@@ -13,10 +13,7 @@ http.route({
     const headerPayload = request.headers;
 
     try {
-        // TODO: After u have connected url with webhook,
-        //  How to let clerk create a new user in convex?
-        //FIXME: 
-      const result = , {
+      const result = await ctx.runAction(internal.clerk.fulfill, {
         payload: payloadString,
         headers: {
           "svix-id": headerPayload.get("svix-id")!,
@@ -25,7 +22,7 @@ http.route({
         },
       });
 
-      switch  {//FIXME:
+      switch (result.type) {
         case "user.created":
           await ctx.runMutation(internal.users.createUser, {
             tokenIdentifier: `https://brave-turkey-77.clerk.accounts.dev|${result.data.id}`,
